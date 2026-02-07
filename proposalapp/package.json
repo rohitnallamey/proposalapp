@@ -1,0 +1,11 @@
+{
+  "name": "proposalapp",
+  "version": "1.0.0",
+  "description": "Interactive proposal static web app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "MIT"
+}

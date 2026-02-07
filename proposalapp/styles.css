@@ -1,0 +1,82 @@
+:root{--accent:#ff5a8a;--bg:#fff7fb}
+*{box-sizing:border-box;font-family:Segoe UI,Roboto,'Helvetica Neue',Arial,sans-serif}
+body{margin:0;background:linear-gradient(180deg,#fff,#ffeef8);color:#333;min-height:100vh}
+/* ensure main content sits above the poodle background */
+header, .hero, main, #gallery, .card, .modal-content, .hero-inner{position:relative;z-index:1}
+
+/* poodle background field */
+.poodle-field{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.poodle{position:absolute;font-size:32px;opacity:.22;transform-origin:center center;user-select:none}
+/* Hero banner: use photo3 as a full-bleed background */
+.hero{min-height:100vh;padding:28px 12px;text-align:center;display:flex;align-items:center;justify-content:center;position:relative;background-image:linear-gradient(rgba(0,0,0,0.32), rgba(0,0,0,0.22)), url('assets/photos/photo4.jpg');background-size:cover;background-position:center;color:#fff}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none}
+.hero-inner{max-width:900px;margin:0 auto;padding:28px;border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,0.45);background:rgba(0,0,0,0.28);backdrop-filter: blur(4px)}
+.hero-title{margin:0;font-size:1.6rem;font-weight:700;color:#fff}
+.hero-message{margin:8px 0 6px;font-size:1.05rem;font-weight:600;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,0.6);transition:opacity .35s ease}
+.hero-hearts{font-size:1.2rem;opacity:.95}
+header{padding:28px 20px;text-align:center}
+h1{margin:0 0 6px;font-size:1.6rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;padding:20px;max-width:900px;margin:0 auto}
+.card{position:relative;border-radius:10px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.08);background:#fff}
+.card img{width:100%;height:260px;object-fit:cover;display:block}
+.card.locked img{filter:blur(16px);transform:scale(1.06);transition:filter .35s ease,transform .35s ease}
+.card.unlocked img{filter:none;transform:none}
+.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.6));opacity:1;transition:opacity .3s}
+.card.unlocked .overlay{opacity:0}
+.ask{background:var(--accent);color:#fff;border:0;padding:10px 16px;border-radius:8px;cursor:pointer}
+.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);z-index:40}
+.modal.hidden{display:none}
+.modal-content{background:#fff;padding:20px;border-radius:12px;max-width:420px;width:92%;text-align:center}
+.modal-content.final{background:linear-gradient(180deg,#fff5fb,#fff)}
+.modal-actions{margin-top:12px;display:flex;gap:10px;justify-content:center}
+.modal input{width:100%;padding:10px;border-radius:8px;border:1px solid #ddd}
+.feedback{color:#b00020;margin-top:8px}
+.yes{background:linear-gradient(90deg,#ff6ba6,#ff9ac2);color:#fff;border:0;padding:12px 18px;border-radius:10px}
+.no{background:#eee;padding:12px 18px;border-radius:10px;border:0}
+
+/* confetti */
+.confetti{position:fixed;z-index:9999;pointer-events:none;left:0;top:0}
+.confetti-piece{position:absolute;width:10px;height:14px;opacity:0.9;border-radius:2px}
+
+@keyframes fall{to{transform:translateY(110vh) rotate(600deg);opacity:0}}
+
+.confetti-piece{animation:fall 1800ms linear forwards}
+
+/* message overlay shown on unlocked photos */
+.card .photo-msg{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;pointer-events:none;padding:12px}
+.card .photo-msg-inner{background:linear-gradient(90deg,rgba(255,90,138,0.12),rgba(0,0,0,0.45));color:#fff;padding:10px 14px;border-radius:12px;font-weight:700;font-family: 'Georgia', serif;letter-spacing:0.2px;text-shadow:0 2px 8px rgba(0,0,0,0.6);transform:translateY(6px);box-shadow:0 8px 20px rgba(0,0,0,0.35);max-width:92%;text-align:center}
+.card .photo-msg-inner::before{content:'\2764\FE0F  ';}
+
+/* repeating timer overlay */
+.repeat-timer{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:999999;pointer-events:none;opacity:0;transition:opacity .25s ease,transform .25s ease}
+.repeat-timer.visible{opacity:1}
+.repeat-timer .repeat-inner{display:flex;flex-direction:column;align-items:center;gap:18px}
+.repeat-timer .repeat-count{font-size:1rem;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,0.6);font-weight:700}
+.repeat-timer .clock{width:240px;height:240px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 30% 20%, rgba(255,255,255,0.12), rgba(255,255,255,0.04)),linear-gradient(180deg, rgba(255,90,138,0.95), rgba(255,154,162,0.95));box-shadow:0 24px 80px rgba(0,0,0,0.45)}
+.repeat-timer .repeat-seconds{font-size:72px;color:#fff;font-weight:900;letter-spacing:2px;text-shadow:0 6px 20px rgba(0,0,0,0.6)}
+
+/* rainbow animated full-screen effect */
+.rainbow-effect{position:fixed;inset:0;z-index:99998;pointer-events:none;background:linear-gradient(90deg,#ff004d,#ff8a00,#ffed00,#00d084,#0096ff);background-size:400% 400%;opacity:0.9;mix-blend-mode:screen;animation:rainbowShift 6s linear infinite}
+@keyframes rainbowShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+/* tattoo word overlays */
+.tattoo-field{position:fixed;inset:0;pointer-events:none;z-index:99997;overflow:hidden}
+.tattoo{position:absolute;color:rgba(255,255,255,0.12);font-weight:800;font-family:Georgia,serif;font-size:48px;letter-spacing:6px;text-transform:lowercase;text-shadow:0 6px 18px rgba(0,0,0,0.35)}
+
+/* large tattoo overlay for photo5 */
+.photo5-tattoo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2}
+.photo5-tattoo{font-size:48px;color:rgba(255,255,255,0.95);font-weight:900;letter-spacing:4px;text-shadow:0 8px 40px rgba(0,0,0,0.6);transform:translateY(4px)}
+
+/* final compliment centered */
+.final-compliment{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:999999;pointer-events:none}
+.final-compliment .compliment-inner{background:linear-gradient(90deg,#ff9ac2,#ffd6a5);padding:20px 28px;border-radius:16px;color:#3b0b2f;font-weight:800;font-size:1.15rem;box-shadow:0 18px 60px rgba(0,0,0,0.45);text-align:center}
+.final-compliment.fade-out{opacity:0;transition:opacity .6s ease}
+
+/* full-screen photo5 */
+.photo5-full{position:fixed;inset:0;z-index:999999;background-size:cover;background-position:center;background-repeat:no-repeat;display:block;pointer-events:none;animation:photoIn .35s ease}
+@keyframes photoIn{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:scale(1)}}
+/* label shown over full-screen photo5 */
+.photo5-full-label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#fff;font-size:64px;font-weight:900;letter-spacing:4px;text-shadow:0 12px 40px rgba(0,0,0,0.6);z-index:2}
+/* exit animation for full-screen photo (zoom + fade) */
+.photo5-full.photo5-exit{animation:photoOut .7s ease forwards}
+@keyframes photoOut{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.18)}}
