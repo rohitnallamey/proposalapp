@@ -20,6 +20,17 @@ jobs:
           ls -la ./proposalapp
         shell: bash
 
+      - name: Check deployment token presence
+        run: |
+          echo "Checking deployment token presence..."
+          if [ -z "$INPUT_AZURE_STATIC_WEB_APPS_API_TOKEN" ]; then
+            echo "ERROR: INPUT_AZURE_STATIC_WEB_APPS_API_TOKEN is empty. Check repo secret AZURE_STATIC_WEB_APPS_API_TOKEN."
+            exit 1
+          else
+            echo "DEPLOYMENT TOKEN PRESENT"
+          fi
+        shell: bash
+
       - name: 'Deploy to Azure Static Web Apps'
         uses: Azure/static-web-apps-deploy@v1
         with:
