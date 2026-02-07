@@ -12,6 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Debug app contents
+        run: |
+          echo "Listing repository root"
+          ls -la .
+          echo "Listing proposalapp folder"
+          ls -la ./proposalapp
+        shell: bash
+
       - name: 'Deploy to Azure Static Web Apps'
         uses: Azure/static-web-apps-deploy@v1
         with:
@@ -19,5 +27,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }} # used for PR comments
           action: "upload"
           app_location: "proposalapp" # app source code path (repo subfolder containing index.html)
+          skip_app_build: true
           api_location: ""    # path to Azure Functions if any
           output_location: "" # build output location
