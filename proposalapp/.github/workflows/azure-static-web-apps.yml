@@ -12,32 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Debug app contents
-        run: |
-          echo "Listing repository root"
-          ls -la .
-          echo "Listing proposalapp folder"
-          ls -la ./proposalapp
-        shell: bash
-
-      - name: Check deployment token presence
-        run: |
-          echo "Checking deployment token presence..."
-          if [ -z "$INPUT_AZURE_STATIC_WEB_APPS_API_TOKEN" ]; then
-            echo "ERROR: INPUT_AZURE_STATIC_WEB_APPS_API_TOKEN is empty. Check repo secret AZURE_STATIC_WEB_APPS_API_TOKEN."
-            exit 1
-          else
-            echo "DEPLOYMENT TOKEN PRESENT"
-          fi
-        shell: bash
-
       - name: 'Deploy to Azure Static Web Apps'
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }} # set by Azure when you link the app or add manually
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # used for PR comments
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "proposalapp" # app source code path (repo subfolder containing index.html)
+          app_location: "proposalapp"
           skip_app_build: true
-          api_location: ""    # path to Azure Functions if any
-          output_location: "" # build output location
+          api_location: ""
+          output_location: ""
