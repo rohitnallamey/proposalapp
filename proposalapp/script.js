@@ -1,7 +1,7 @@
 const questions = [
-  {id:0, q: 'What color do I always wear on our movie nights?', a: 'blue'},
-  {id:1, q: 'What city did we first visit together?', a: 'paris'},
-  {id:2, q: "What's my favorite dessert?", a: 'chocolate'}
+  {id:0, q: 'Which restaurant was our first date?', a: 'enoteca sociale'},
+  {id:1, q: 'Where was our first meal together from?', a: 'boustan'},
+  {id:2, q: "What's my favorite dessert?", a: 'you'}
 ];
 
 const cards = Array.from(document.querySelectorAll('.card'));
@@ -17,6 +17,8 @@ const noBtn = document.getElementById('noBtn');
 
 let activeIndex = null;
 let unlocked = new Set();
+// track number of failed attempts per question
+const attempts = new Array(questions.length).fill(0);
 
 function openQuestion(i){
   activeIndex = i;
@@ -45,10 +47,28 @@ submitAnswer.addEventListener('click', ()=>{
     setTimeout(()=> closeQuestion(), 600);
     if(unlocked.size === cards.length) setTimeout(()=> showFinal(), 700);
   } else {
+    // increment failed attempts and reveal answer after 3 tries
+    attempts[activeIndex] += 1;
+    if(attempts[activeIndex] >= 3){
+      const revealed = questions[activeIndex].a;
+      feedback.textContent = `Answer revealed: ${revealed}`;
+      const card = cards[activeIndex];
+      card.classList.remove('locked');
+      card.classList.add('unlocked');
+      unlocked.add(activeIndex);
+      setTimeout(()=> closeQuestion(), 900);
+      if(unlocked.size === cards.length) setTimeout(()=> showFinal(), 1000);
+      return;
+    }
     feedback.textContent = 'Not quite — try again!';
     answerInput.classList.add('shake');
     setTimeout(()=> answerInput.classList.remove('shake'), 500);
   }
+});
+
+// allow pressing Enter to submit an answer
+answerInput.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter') submitAnswer.click();
 });
 
 cancelAnswer.addEventListener('click', closeQuestion);
