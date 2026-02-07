@@ -11,7 +11,7 @@ Local run (Node required):
 npm install
 npm start
 ```
-##
+###
 
 3. Open http://localhost:3000 in your browser.
 
