@@ -11,7 +11,7 @@ Local run (Node required):
 npm install
 npm start
 ```
-####
+#####
 
 3. Open http://localhost:3000 in your browser.
 
@@ -26,3 +26,4 @@ Deploy to Azure Static Web Apps:
 3. Azure will build and host the static site automatically.
 
 If you want, I can help create the GitHub Actions workflow and push the files.
+
