@@ -9,6 +9,7 @@ jobs:
   build_and_deploy_job:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
+    environment: Production
     steps:
       - uses: actions/checkout@v3
 
@@ -22,3 +23,5 @@ jobs:
           skip_app_build: true
           api_location: ""
           output_location: ""
+        env:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
