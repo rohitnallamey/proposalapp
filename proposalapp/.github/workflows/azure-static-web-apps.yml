@@ -2,38 +2,32 @@ name: Azure Static Web Apps CI/CD
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch: {}
 
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v3
 
-      - name: Check AZURE secret presence (safe)
+      - name: Check token presence (safe)
         run: |
           if [ -z "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}" ]; then
-            echo "::warning::AZURE_STATIC_WEB_APPS_API_TOKEN secret is missing or empty. Deployment will be skipped."
-            echo "SECRET_PRESENT=false" >> $GITHUB_OUTPUT
+            echo "::warning::AZURE_STATIC_WEB_APPS_API_TOKEN is missing"
           else
-            len=$(printf '%s' "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}" | wc -c)
-            echo "AZURE_STATIC_WEB_APPS_API_TOKEN present (length=${len})"
-            echo "SECRET_PRESENT=true" >> $GITHUB_OUTPUT
+            echo "token present (length=$(printf '%s' "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}" | wc -c))"
           fi
 
       - name: Deploy to Azure Static Web Apps
-        id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "./proposalapp"
-          api_location: ""
-          output_location: ""
+          app_location: "proposalapp"   # path to folder that contains index.html
+          api_location: ""              # no functions
+          output_location: ""           # no build output dir
           skip_app_build: true
           skip_deploy_on_missing_secrets: true
